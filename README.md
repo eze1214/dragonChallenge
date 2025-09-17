@@ -64,7 +64,7 @@ flowchart TD
 
 ```
 
-## Diagrama
+## Diagram
 ![Process Flow Diagram](./diagram.png)
 
 
