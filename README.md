@@ -73,6 +73,8 @@ flowchart TD
 ### Clarifying Notes
 
 - **Webhook trigger:** Sanity does not execute functions directly. When you configure an Outgoing Webhook in sanity.io/manage, Sanity sends an HTTP POST to the endpoint you define whenever a document matches the GROQ filter condition.
+- **Further reading:** [Filters in GROQ-powered webhooks](https://www.sanity.io/guides/filters-in-groq-powered-webhooks)
+
 
 - **Where onWebhook fits:** The onWebhook(payload) function lives in your backend. It is called inside the endpoint that receives Sanity’s POST request (e.g. /api/webhooks/sanity). Its job is to process the payload: detect changes, generate summaries, and update the document using @sanity/client.
 
