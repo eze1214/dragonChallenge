@@ -69,7 +69,7 @@ flowchart TD
 
 
 
-
+## System sketch
 ```markdown
 import { createClient } from '@sanity/client';
 
