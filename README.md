@@ -69,7 +69,7 @@ flowchart TD
 
 
 
-## System sketch
+## Implementation Flow
 ```markdown
 import { createClient } from '@sanity/client';
 
@@ -123,8 +123,10 @@ async function onWebhook(payload: {
     .set({ sourceSummaries: updated })
     .commit();
 }
+```
 
-3. Notes on Scalability & Infrastructure
+
+### Notes on Scalability & Infrastructure
 
 The design above is a draft implementation to illustrate the core workflow. For this system to run in production, additional infrastructure considerations are needed:
 
