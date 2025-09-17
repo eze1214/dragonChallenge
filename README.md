@@ -84,11 +84,11 @@ flowchart TD
 
 ### Clarifying Notes
 
-- Webhook trigger: Sanity does not execute functions directly. When you configure an Outgoing Webhook in sanity.io/manage, Sanity sends an HTTP POST to the endpoint you define whenever a document matches the GROQ filter condition.
+- **Webhook trigger:** Sanity does not execute functions directly. When you configure an Outgoing Webhook in sanity.io/manage, Sanity sends an HTTP POST to the endpoint you define whenever a document matches the GROQ filter condition.
 
-- Where onWebhook fits: The onWebhook(payload) function lives in your backend. It is called inside the endpoint that receives Sanity’s POST request (e.g. /api/webhooks/sanity). Its job is to process the payload: detect changes, generate summaries, and update the document using @sanity/client.
+- **Where onWebhook fits:** The onWebhook(payload) function lives in your backend. It is called inside the endpoint that receives Sanity’s POST request (e.g. /api/webhooks/sanity). Its job is to process the payload: detect changes, generate summaries, and update the document using @sanity/client.
 
-- Simplified payload: The examples assume a payload with pageId, oldSources, and newSources for clarity. In reality, the Sanity webhook payload depends on the projection you configure, and you would normalize it before passing it to onWebhook.
+- **Simplified payload:** The examples assume a payload with pageId, oldSources, and newSources for clarity. In reality, the Sanity webhook payload depends on the projection you configure, and you would normalize it before passing it to onWebhook.
 
 ```markdown
 import { createClient } from '@sanity/client';
@@ -150,22 +150,22 @@ async function onWebhook(payload: {
 
 The design above is a draft implementation to illustrate the core workflow. For this system to run in production, additional infrastructure considerations are needed:
 
-Scalability: The webhook endpoint should run on serverless infrastructure (e.g. Vercel Functions, AWS Lambda) so it can handle bursts of traffic without manual provisioning.
+**Scalability:** The webhook endpoint should run on serverless infrastructure (e.g. Vercel Functions, AWS Lambda) so it can handle bursts of traffic without manual provisioning.
 
-Queueing & Retries: Instead of summarizing inline during the webhook call, the event could be pushed to a message queue (e.g. SQS, RabbitMQ). This ensures resilience if multiple documents are updated at once.
+**Queueing & Retries:** Instead of summarizing inline during the webhook call, the event could be pushed to a message queue (e.g. SQS, RabbitMQ). This ensures resilience if multiple documents are updated at once.
 
-Error Handling: Failures in fetching or summarizing sources should be logged and retried, with dead-letter queues for debugging.
+**Error Handling:** Failures in fetching or summarizing sources should be logged and retried, with dead-letter queues for debugging.
 
-Security: Webhook signatures should be validated using a secret key from Sanity to prevent spoofed requests.
+**Security:** Webhook signatures should be validated using a secret key from Sanity to prevent spoofed requests.
 
-Monitoring: Logs and metrics (success/failure rates, LLM cost tracking) would be essential to keep the system reliable.
+**Monitoring:** Logs and metrics (success/failure rates, LLM cost tracking) would be essential to keep the system reliable.
 
 ## Final Notes
 
-This is a draft-level implementation meant to demonstrate how I would structure the solution.
+This is a *draft-level* implementation meant to demonstrate how I would structure the solution.
 
 The code snippets have not been tested in a running environment and may contain minor bugs or omissions.
 
-The intent was to keep the syntax clear, use idiomatic TypeScript/JavaScript, and reflect familiarity with Sanity’s APIs.
+The intent was to keep the syntax clear, use idiomatic *TypeScript/JavaScript*,
 
 In a real-world setup, I would refine the code with proper testing, error handling, and integration checks.
