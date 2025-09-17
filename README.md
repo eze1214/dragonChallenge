@@ -25,7 +25,7 @@ In the long term, this shifted how I see mentoring: it’s not just about transf
 
 ## 2. Real-World Problem Solving: LLM Summaries from Linked Sources  
 
-### Step 1: Markdown Format  
+### Markdown Format  
 
 ```markdown
 # Topic: [Page Title]
