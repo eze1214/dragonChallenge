@@ -90,7 +90,7 @@ flowchart TD
 
 - **Simplified payload:** The examples assume a payload with pageId, oldSources, and newSources for clarity. In reality, the Sanity webhook payload depends on the projection you configure, and you would normalize it before passing it to onWebhook.
 
-```markdown
+```typescript
 import { createClient } from '@sanity/client';
 
 const client = createClient({
@@ -142,6 +142,37 @@ async function onWebhook(payload: {
     .patch(pageId)
     .set({ sourceSummaries: updated })
     .commit();
+}
+```
+
+### About summarizeWithLLM
+For simplicity, the draft shows summarizeWithLLM as a single LLM call. In practice, this step could also be implemented with an agent-based approach. An agent could handle tasks like document parsing (PDF vs HTML), chunking long texts, validating the Markdown schema, and retrying if the output doesn’t match expectations.
+
+
+```typescript
+async function summarizeWithLLM(docText: string, src: SourceInfo): Promise<string> {
+  const prompt = `
+  Summarize the following ${src.type} into Markdown using this schema:
+
+  ### ${src.title}
+  - **Type:** ${src.type}
+  - **Link:** ${src.url}
+  - **Summary:**
+    [your summary here]
+
+  Document:
+  ${docText}
+  `;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      { role: "system", content: "You are a helpful assistant that summarizes legal documents clearly." },
+      { role: "user", content: prompt },
+    ],
+  });
+
+  return response.choices[0].message.content.trim();
 }
 ```
 
