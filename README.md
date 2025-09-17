@@ -65,6 +65,17 @@ flowchart TD
 ```
 
 ## Diagram
+```markdown
+flowchart TD
+  A[Editor updates body/sources in Sanity] --> B[Outgoing webhook triggers]
+  B --> C[Webhook payload includes pageId, oldSources, newSources]
+  C --> D[Diff sources: detect added/removed]
+  D --> E[Fetch HTML/PDF source documents]
+  E --> F[LLM generates per-source Markdown summary]
+  F --> G[Merge summaries (remove old, add new)]
+  G --> H[Write back via @sanity/client patch]
+```
+
 ![Process Flow Diagram](./diagram.png)
 
 
