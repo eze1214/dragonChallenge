@@ -87,9 +87,9 @@ import { createClient } from '@sanity/client';
 const client = createClient({
   projectId: 'YOUR_PROJECT_ID',
   dataset: 'YOUR_DATASET',
-  apiVersion: '2025-02-06', // fixed version for stability
+  apiVersion: '2025-02-06',
   token: process.env.SANITY_WRITE_TOKEN,
-  useCdn: false, // need fresh data
+  useCdn: false,
 });
 
 interface SourceInfo {
@@ -137,7 +137,7 @@ async function onWebhook(payload: {
 ```
 
 
-### Notes on Scalability & Infrastructure
+## Notes on Scalability & Infrastructure
 
 The design above is a draft implementation to illustrate the core workflow. For this system to run in production, additional infrastructure considerations are needed:
 
@@ -150,3 +150,13 @@ Error Handling: Failures in fetching or summarizing sources should be logged and
 Security: Webhook signatures should be validated using a secret key from Sanity to prevent spoofed requests.
 
 Monitoring: Logs and metrics (success/failure rates, LLM cost tracking) would be essential to keep the system reliable.
+
+## Final Notes
+
+This is a draft-level implementation meant to demonstrate how I would structure the solution.
+
+The code snippets have not been tested in a running environment and may contain minor bugs or omissions.
+
+The intent was to keep the syntax clear, use idiomatic TypeScript/JavaScript, and reflect familiarity with Sanity’s APIs.
+
+In a real-world setup, I would refine the code with proper testing, error handling, and integration checks.
