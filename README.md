@@ -123,3 +123,17 @@ async function onWebhook(payload: {
     .set({ sourceSummaries: updated })
     .commit();
 }
+
+3. Notes on Scalability & Infrastructure
+
+The design above is a draft implementation to illustrate the core workflow. For this system to run in production, additional infrastructure considerations are needed:
+
+Scalability: The webhook endpoint should run on serverless infrastructure (e.g. Vercel Functions, AWS Lambda) so it can handle bursts of traffic without manual provisioning.
+
+Queueing & Retries: Instead of summarizing inline during the webhook call, the event could be pushed to a message queue (e.g. SQS, RabbitMQ). This ensures resilience if multiple documents are updated at once.
+
+Error Handling: Failures in fetching or summarizing sources should be logged and retried, with dead-letter queues for debugging.
+
+Security: Webhook signatures should be validated using a secret key from Sanity to prevent spoofed requests.
+
+Monitoring: Logs and metrics (success/failure rates, LLM cost tracking) would be essential to keep the system reliable.
